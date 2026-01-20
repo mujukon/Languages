@@ -114,7 +114,9 @@ let viewMode = "quiz"; // "quiz" | "list"
 const langs = [];
 const dictionaries = [];
 const hasReading = [];
-
+// DOM取得に追加
+const quizButtons = document.getElementById("quizButtons");
+    
 blocks.forEach(block => {
     const rows = block.split("|").filter(r => r !== "");
     if (rows.length === 0) return;
@@ -391,7 +393,7 @@ if (MODES[state.mode].list) {
     const index = state.page * 3 + (n - 1);
 if (langs[index]) {
     state.lang = index;
-    showQuizuttons();
+    showQuizButtons();
     if (MODES[state.mode].list) {
         showList();   // ← ここで初めて一覧
         showListButtons();
@@ -426,6 +428,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
