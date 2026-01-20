@@ -302,11 +302,6 @@ function showList() {
 
     textA.innerHTML = html;
 
-    btn.a.textContent = "";
-    btn.b.textContent = "";
-    btn.c.textContent = "";
-    btn.d.textContent = "";
-
     state.phase = 99;
     btn.next.textContent = "モード変更";
 }
@@ -373,7 +368,7 @@ if (n === 5) {
   // 一覧モードに入ったら「言語選択画面」に戻す
 if (MODES[state.mode].list) {
     state.phase = 0;
-    textQ.textContent = "表示したい言語を選んでください";
+    textQ.textContent = "単語一覧";
     textA.textContent = "";
     updateLangButtons();
     btn.next.textContent = "モード変更";
@@ -393,10 +388,8 @@ if (MODES[state.mode].list) {
     const index = state.page * 3 + (n - 1);
 if (langs[index]) {
     state.lang = index;
-    showQuizButtons();
     if (MODES[state.mode].list) {
         showList();   // ← ここで初めて一覧
-        showListButtons();
     } else {
         ask();
     }
@@ -404,15 +397,7 @@ if (langs[index]) {
 
 
 }
-function showQuizButtons() {
-  quizButtons.hidden = false;
-  viewMode = "quiz";
-}
 
-function showListButtons() {
-  quizButtons.hidden = true;
-  viewMode = "list";
-}
 /* ===== イベント ===== */
 
 btn.back.onclick = () => handleClick(0);
@@ -428,6 +413,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
