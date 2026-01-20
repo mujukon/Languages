@@ -243,10 +243,13 @@ function ask() {
 
     const dic = dictionaries[state.lang];
     if (!hasReading[state.lang]) {
-        textQ.textContent = "単語がありません";
+        textQ.textContent = "読みがありません";
         return;
     }
-
+   if (dic.length === 0) {
+        textQ.textContent = "単語がありません";
+        return;
+   }
     const mode = MODES[state.mode];
     const word = randomWord();
 
@@ -441,6 +444,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
