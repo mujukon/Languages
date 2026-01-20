@@ -242,7 +242,7 @@ function ask() {
     clearColors();
 
     const dic = dictionaries[state.lang];
-    if (hasReading[state.lang]) {
+    if (!hasReading[state.lang]) {
         textQ.textContent = "単語がありません";
         return;
     }
@@ -441,6 +441,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
