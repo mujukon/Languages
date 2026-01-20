@@ -242,10 +242,7 @@ function ask() {
     clearColors();
 
     const dic = dictionaries[state.lang];
-    if (!hasReading[state.lang]) {
-        textQ.textContent = "読みがありません";
-        return;
-    }
+    
    if (dic.length === 0) {
         textQ.textContent = "単語がありません";
         return;
@@ -263,6 +260,10 @@ if (state.mode === 0) {
     textA.textContent = word[2] || "";
 } else if (state.mode === 2) {
     // 単語➝読み → 意味表示
+    if (!hasReading[state.lang]) {
+        textQ.textContent = "読みがありません";
+        return;
+    }
     textA.textContent = word[1] || "";
 } else {
     // 意味➝単語
@@ -444,6 +445,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
