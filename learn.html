@@ -367,11 +367,17 @@ if (n === 5) {
         state.mode = 0;
     }
 
-    if (MODES[state.mode].list) {
-        showList();
-    } else {
-        updateModeText();
-    }
+  // 一覧モードに入ったら「言語選択画面」に戻す
+if (MODES[state.mode].list) {
+    state.phase = 0;
+    textQ.textContent = "表示したい言語を選んでください";
+    textA.textContent = "";
+    updateLangButtons();
+    btn.next.textContent = "モード変更";
+} else {
+    updateModeText();
+}
+
     return;
 }
 
@@ -380,16 +386,17 @@ if (n === 5) {
     // 言語選択
 // 言語選択
     const index = state.page * 3 + (n - 1);
-    if (langs[index]) {
-        state.lang = index;
+    const index = state.page * 3 + (n - 1);
+if (langs[index]) {
+    state.lang = index;
 
-        // 一覧モードなら即一覧
-        if (MODES[state.mode].list) {
-         showList();
-      } else {
-          ask();
-      }
+    if (MODES[state.mode].list) {
+        showList();   // ← ここで初めて一覧
+    } else {
+        ask();
+    }
 }
+
 
 }
 
@@ -408,4 +415,5 @@ resetUI();
 </script>
 
 </html>
+
 
