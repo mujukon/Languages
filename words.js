@@ -414,12 +414,12 @@ kuning	黄色い
 hitam	黒い	
 putih	白い	
 halo	こんにちは	
-selamat tinggal		さようなら(残る人に)
-selamat jalan		さようなら(旅立つ人に)
+selamat tinggal	さようなら(残る人に)	
+selamat jalan	さようなら(旅立つ人に)	
 terima kasih	ありがとう	
 maaf	ごめんなさい	
 tolong	おねがいします	
-Saya tidak mengerti		わかりません
+Saya tidak mengerti	わかりません	
 bisa	～できる	
 ingin	～したい	
 sudah	すでに～した	
@@ -430,7 +430,7 @@ ya	はい
 dan	～と,そして	
 tetapi	しかし	
 karena/maka	だから	
-Jepang		日本
+Jepang	日本	
 *クメール語		
 ខ្ញុំ	私	kʰɲom
 យើង	私たち	jiəŋ
@@ -1468,5 +1468,5 @@ Japani	日本
 ученик	生徒	ʊt͡ɕɪˈnʲik
 город	町	ˈɡorət
 дом	家	dom
-магазин	店	məɡɐˈzʲin`
-
+магазин	店	məɡɐˈzʲin
+стан
