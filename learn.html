@@ -138,20 +138,28 @@ blocks.forEach(block => {
     langs.push(first[0]); // 言語名
 
     const dict = rows.slice(1).map(row => {
-    const cols = row.split(",");
-    return [
-        cols[0] ?? "",
-        cols[1] ?? "",
-        cols[2] ?? ""   // ← 無ければ空文字
-    ].join(",");
-});
-dictionaries.push(dict);
+        const cols = row.split(",");
+        return [
+            cols[0] ?? "",
+            cols[1] ?? "",
+            cols[2] ?? ""   // 無ければ空文字
+        ].join(",");
+    });
+    dictionaries.push(dict);
 
-    // 読みが1つでもあるか？
-    hasReading.push(
-        dict.some(row => row.split(",")[2]?.trim() !== "")
-    );
+    /* ===== 読み判定（強化版） ===== */
+
+    const total = dict.length;
+
+    const noReadingCount = dict.filter(row => {
+        const reading = row.split(",")[2] ?? "";
+        return reading.trim() === ""; // 空白・タブ全部「無い」
+    }).length;
+
+    // 8割以上が「読み無し」なら、その言語は読み無し扱い
+    hasReading.push(noReadingCount / total < 0.8);
 });
+
 
 /* ===== モード定義 ===== */
 
@@ -234,7 +242,7 @@ function ask() {
     clearColors();
 
     const dic = dictionaries[state.lang];
-    if (!dic || dic.length === 0) {
+    if (hasReading[state.lang]) {
         textQ.textContent = "単語がありません";
         return;
     }
@@ -433,6 +441,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
