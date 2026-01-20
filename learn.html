@@ -18,7 +18,7 @@
         <p id="b" class="sub"></p>
     </div>
 
-    <div class="button-container">
+    <div class="button-container" id="quizButtons">
         <button id="1">ねこ語</button>
         <button id="2">いぬ語</button>
         <button id="3">うさぎ語</button>
@@ -109,6 +109,7 @@ button {
 
 words = words.replace(/\n/g, "|").replace(/\t/g, ",");
 const blocks = words.split("*");
+let viewMode = "quiz"; // "quiz" | "list"
 
 const langs = [];
 const dictionaries = [];
@@ -383,15 +384,17 @@ if (MODES[state.mode].list) {
 
 
 
+
     // 言語選択
 // 言語選択
 
     const index = state.page * 3 + (n - 1);
 if (langs[index]) {
     state.lang = index;
-
+    showQuizuttons();
     if (MODES[state.mode].list) {
         showList();   // ← ここで初めて一覧
+        showListButtons();
     } else {
         ask();
     }
@@ -399,7 +402,15 @@ if (langs[index]) {
 
 
 }
+function showQuizButtons() {
+  quizButtons.hidden = false;
+  viewMode = "quiz";
+}
 
+function showListButtons() {
+  quizButtons.hidden = true;
+  viewMode = "list";
+}
 /* ===== イベント ===== */
 
 btn.back.onclick = () => handleClick(0);
@@ -415,6 +426,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
