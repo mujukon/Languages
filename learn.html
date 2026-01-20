@@ -137,8 +137,15 @@ blocks.forEach(block => {
     const first = rows[0].split(",");
     langs.push(first[0]); // 言語名
 
-    const dict = rows.slice(1);
-    dictionaries.push(dict);
+    const dict = rows.slice(1).map(row => {
+    const cols = row.split(",");
+    return [
+        cols[0] ?? "",
+        cols[1] ?? "",
+        cols[2] ?? ""   // ← 無ければ空文字
+    ].join(",");
+});
+dictionaries.push(dict);
 
     // 読みが1つでもあるか？
     hasReading.push(
@@ -426,6 +433,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
