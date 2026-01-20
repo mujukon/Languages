@@ -189,11 +189,16 @@ function updateLangButtons() {
 
 function resetUI() {
     clearColors();
+
+    document.querySelector(".button-container").style.display = "";
+    document.querySelector(".next").style.display = "";
+
     state.phase = 0;
     updateLangButtons();
     updateModeText();
     btn.next.textContent = "モード変更";
 }
+
 
 /* ===== 出題 ===== */
 
@@ -287,7 +292,6 @@ function showList() {
     let html = "";
     dic.forEach(row => {
         const [word, meaning, reading] = row.split(",");
-
         html += "・" + word;
         if (reading) html += "【" + reading + "】";
         html += "： " + meaning + "<br>";
@@ -295,15 +299,15 @@ function showList() {
 
     textA.innerHTML = html;
 
-    // 選択肢ボタンは無効化
     btn.a.textContent = "";
     btn.b.textContent = "";
     btn.c.textContent = "";
     btn.d.textContent = "";
 
-    state.phase = 99; // 一覧表示中
+    state.phase = 99;
     btn.next.textContent = "モード変更";
 }
+
 
 
 /* ===== クリック処理 ===== */
@@ -312,19 +316,7 @@ function handleClick(n) {
     if (n === 0) return resetUI();
 
     if (state.phase === -1) return answer(n);// 次へボタン
-    if (n === 5) {
-    // 出題中 → パス（不正解）
-        if (state.phase === -1) {
-        // 不正解色を付けずに正解だけ表示
-        showAnswer();
-        return;
-        }
-    // 正誤表示中 → 次の問題
-        if (state.phase === -2) {
-            ask();
-            return;
-        }
-}
+    
 
 
     // その他
@@ -340,8 +332,19 @@ if (n === 5) {
     // 一覧表示中 → 次のモードへ
     if (state.phase === 99) {
         state.mode = (state.mode + 1) % MODES.length;
+
+        // 読み無し言語ならスキップ
+        if (state.mode === 2 && !hasReading[state.lang]) {
+            state.mode = 0;
+        }
+
         state.phase = 0;
-        updateModeText();
+
+        if (MODES[state.mode].list) {
+            showList();
+        } else {
+            updateModeText();
+        }
         return;
     }
 
@@ -357,15 +360,13 @@ if (n === 5) {
         return;
     }
 
-    // 言語選択中 → モード切替
+    // 言語選択中 → モード変更
     state.mode = (state.mode + 1) % MODES.length;
 
-    // 読み無し言語なら「単語➝読み」を飛ばす
     if (state.mode === 2 && !hasReading[state.lang]) {
         state.mode = 0;
     }
 
-    // 一覧モードに入ったら即表示
     if (MODES[state.mode].list) {
         showList();
     } else {
@@ -373,6 +374,7 @@ if (n === 5) {
     }
     return;
 }
+
 
 
     // 言語選択
@@ -406,3 +408,4 @@ resetUI();
 </script>
 
 </html>
+
