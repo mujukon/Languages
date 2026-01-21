@@ -353,10 +353,6 @@ function showList() {
 function handleClick(n) {
     if (n === 0) return resetUI();
 
-    if (state.phase === -1) return answer(n);// 次へボタン
-    
-
-
     // その他
     if (n === 4) {
         state.page = (state.page + 1) % Math.ceil(langs.length / 3);
@@ -385,12 +381,11 @@ if (n === 5) {
         }
         return;
     }
-
     // 出題中 → パス
     if (state.phase === -1) {
         mistake = quiz;
         showAnswer();
-        return;
+        return answer(n);
     }
 
     // 正誤表示中 → 次の問題
@@ -454,6 +449,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
