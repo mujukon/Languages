@@ -235,32 +235,31 @@ function resetUI() {
 /* ===== 出題 ===== */
 function randomWord() {
     const dic = dictionaries[state.lang];
+    if (!dic || dic.length === 0) return ["", "", ""];
 
-    if (
-        mistake === -1 ||
-        mistake < 0 ||
-        mistake >= dic.length
-    ) {
-        quiz = Math.floor(Math.random() * dic.length);
-        return dic[quiz].split(",");
-    } else {
+    // 出題するインデックスを決定
+    if (mistake >= 0 && mistake < dic.length) {
         quiz = mistake;
-        return dic[quiz].split(",");
+    } else {
+        quiz = Math.floor(Math.random() * dic.length);
     }
+
+    return dic[quiz].split(",");
 }
+
 
 function ask() {
     clearColors();
     state.correct = 0;
     const dic = dictionaries[state.lang];
     
-   if (dic.length === 0) {
+    if (!dic || dic.length === 0) {
         textQ.textContent = "単語がありません";
         return;
-   }
-    const mode = MODES[state.mode];
-    const word = randomWord();
+    }
 
+    const mode = MODES[state.mode];
+    const word = randomWord(); // ここで問題決定（quizが確定）
     state.current = word;
     
     textQ.textContent = word[mode.q];
@@ -291,9 +290,17 @@ if (state.mode === 0) {
     for (let i = 0; i < 4; i++) {
         if (answers[i] === "") {
             let w;
+            let retry = 0;
             do {
-                w = randomWord();
-            } while (w[mode.a] === word[mode.a]);
+                // randomWordを使わず、直接ランダムに1つ選ぶ
+                const randomIdx = Math.floor(Math.random() * dic.length);
+                w = dic[randomIdx].split(",");
+                retry++;
+            } while (
+                (w[mode.a] === word[mode.a]) && // 正解と同じ意味ならやり直し
+                retry < 100 &&                 // 無限ループ防止
+                dic.length > 1                 // 単語が1つしかないなら諦める
+            );
             answers[i] = w[mode.a] || "";
         }
     }
@@ -432,6 +439,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
