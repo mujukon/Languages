@@ -233,15 +233,21 @@ function resetUI() {
 
 
 /* ===== 出題 ===== */
-
 function randomWord() {
     const dic = dictionaries[state.lang];
-   if (mistake === -1){
-    quiz = Math.floor(Math.random() * dic.length);
-    return dic[quiz].split(",");
-   }else{
-     return dic[mistake].split(",");
-   }
+
+    if (
+        mistake === -1 ||
+        mistake < 0 ||
+        mistake >= dic.length
+    ) {
+        quiz = Math.floor(Math.random() * dic.length);
+        mistake = -1;
+        return dic[quiz].split(",");
+    } else {
+        quiz = mistake;
+        return dic[quiz].split(",");
+    }
 }
 
 function ask() {
@@ -470,6 +476,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
