@@ -276,8 +276,8 @@ if (state.mode === 0) {
     }
     textA.textContent = word[1] || "";
 } else {
-    // 意味➝単語
-    textA.textContent = "";
+    // 意味➝単語→読み表示
+    textA.textContent = word[2];
 }
 
 
@@ -374,6 +374,7 @@ function handleClick(n) {
         if (n >= 1 && n <= 4) {
             answer(n);
         } else if (n === 5) {
+            quiz=mistake;
             showAnswer(); // パスして正解表示
         }
         return;
@@ -439,6 +440,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
