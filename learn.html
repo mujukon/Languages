@@ -123,7 +123,8 @@ button {
 words = words.replace(/\n/g, "|").replace(/\t/g, ",");
 const blocks = words.split("*");
 let viewMode = "quiz"; // "quiz" | "list"
-
+let mistake = -1;
+let quiz = 0;
 const langs = [];
 const dictionaries = [];
 const hasReading = [];
@@ -235,7 +236,12 @@ function resetUI() {
 
 function randomWord() {
     const dic = dictionaries[state.lang];
-    return dic[Math.floor(Math.random() * dic.length)].split(",");
+   if (mistake === -1){
+    quiz = Math.floor(Math.random() * dic.length);
+    return dic[quiz].split(",");
+   }else{
+     return dic[mistake].split(",");
+   }
 }
 
 function ask() {
@@ -299,9 +305,11 @@ if (state.mode === 0) {
 
 function answer(n) {
     if (n === state.correct) {
+        mistake = -1;
         showAnswer();
     } else {
         btn[["a","b","c","d"][n - 1]].style.backgroundColor = "#f88";
+        mistake = quiz;
         showAnswer();
     }
 }
@@ -380,6 +388,7 @@ if (n === 5) {
 
     // 出題中 → パス
     if (state.phase === -1) {
+        mistake = quiz;
         showAnswer();
         return;
     }
@@ -445,6 +454,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
