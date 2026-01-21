@@ -221,7 +221,7 @@ function updateLangButtons() {
 
 function resetUI() {
     clearColors();
-
+   
     document.querySelector(".button-container").style.display = "";
     document.querySelector(".next").style.display = "";
 
@@ -242,7 +242,6 @@ function randomWord() {
         mistake >= dic.length
     ) {
         quiz = Math.floor(Math.random() * dic.length);
-        mistake = -1;
         return dic[quiz].split(",");
     } else {
         quiz = mistake;
@@ -252,7 +251,7 @@ function randomWord() {
 
 function ask() {
     clearColors();
-
+    state.correct = 0;
     const dic = dictionaries[state.lang];
     
    if (dic.length === 0) {
@@ -476,6 +475,7 @@ resetUI();
 </script>
 
 </html>
+
 
 
 
